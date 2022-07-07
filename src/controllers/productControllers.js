@@ -9,6 +9,7 @@ export async function getProducts(req, res) {
     res.status(500).send(error);
   }
 }
+
 export async function getProductById(req, res) {
   try {
     const productId = req.params.productId;
