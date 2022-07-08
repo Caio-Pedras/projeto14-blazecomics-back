@@ -2,6 +2,18 @@ import db from "../db.js";
 import loginSchema from '../schemas/loginSchema.js';
 import registerSchema from '../schemas/registerSchema.js';
 
+export async function validateToken(req, res, next) {
+    const { authorization } = req.headers;
+    const token = authorization?.replace('Bearer ', '');
+    const existingUser = await db.collection("sessions").findOne({ "token": token } );
+    if (existingUser === null) {
+        res.sendStatus(401);
+        return
+    }
+    res.locals.existingUser = existingUser;
+    next();
+}
+
 
 export async function validateUser(req, res, next) {
     const newUser = req.body;
