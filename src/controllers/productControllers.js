@@ -17,10 +17,8 @@ export async function getProductById(req, res) {
     const product = await db
       .collection("products")
       .findOne({ _id: new ObjectId(productId) });
-    console.log(product);
     res.status(200).send(product);
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 }
