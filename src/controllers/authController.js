@@ -29,9 +29,9 @@ export async function signUp(req, res) {
     delete newUser.confirmPassword;
     try {
         await db.collection('users').insertOne({ ...newUser, password: passwordHash })
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (error) {
-        res.sendStatus(422);
+        return res.sendStatus(422);
     }
 
 }
