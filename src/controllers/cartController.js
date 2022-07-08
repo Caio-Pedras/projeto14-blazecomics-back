@@ -25,15 +25,12 @@ export async function buyItems(req, res) {
     const { userId } = res.locals.existingUser;
     const items = req.body
     try {
-        // // await db.collection("purchases").insertOne({ ...items, userId })
-        // const aa = await db.collection("products").find({}).toArray()
-        await db.collection("products").updateMany({}, { $set: { price: { $toDouble: '$price' } }})
-        // for (let i = 0; items.length > i; i++) {
-        //     let many = parseInt(items[i].number)
-        //     await db.collection("products").updateOne({
-        //         "_id": items[i]._id
-        //     }, {$inc: {"number": -many}})
-        // }
+        for (let i = 0; items.length > i; i++) {
+            let many = parseInt(items[i].number)
+            await db.collection("products").updateOne({
+                "_id": items[i]._id
+            }, {$inc: {"number": -many}})
+        }
         res.sendStatus(200)
     } catch (err){
         console.log(err)
