@@ -25,13 +25,15 @@ export async function getItems(req, res) {
 
 export async function buyItems(req, res) {
     const { userId } = res.locals.existingUser;
+    const items = req.body
     try {
         for (let i = 0; req.body.length > i; i++) {
             let many = parseInt(req.body[i].number)*(-1)
             await db.collection("products").updateOne({
-                "_id":  new ObjectId(req.body[i]._id)
+                "_id": req.body[i]._id
             }, {$inc: {"number": many}})
         }
+        await db.collection("buyers").insertOne({userId: userId, items})
         res.sendStatus(200)
     } catch (err){
         console.log(err)
