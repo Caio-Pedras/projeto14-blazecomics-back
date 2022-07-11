@@ -39,6 +39,4 @@ export async function buyItems(req, res) {
         console.log(err)
         res.sendStatus(422)
     }
-
-
 }
