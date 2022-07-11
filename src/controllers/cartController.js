@@ -1,5 +1,6 @@
 import db from "../db.js";
 import { ObjectId } from "mongodb";
+import dayjs from "dayjs";
 
 export async function getItems(req, res) {
     let search;
@@ -33,7 +34,7 @@ export async function buyItems(req, res) {
                 "_id": req.body[i]._id
             }, {$inc: {"number": many}})
         }
-        await db.collection("buyers").insertOne({userId: userId, items})
+        await db.collection("buyers").insertOne({userId: userId, items, date: dayjs().format('DD/MM/YY') })
         res.sendStatus(200)
     } catch (err){
         console.log(err)
